@@ -1,1 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>NightShift Elite | Rent Talent for Night Work</title>
+  <!-- Google Fonts & Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(145deg, #0b0c1a 0%, #10121f 100%);
+      color: #f0f3ff;
+      scroll-behavior: smooth;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1e1f2e;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #ff6a4b;
+      border-radius: 12px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem 2rem 3rem;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding: 2rem 1rem;
+      border-radius: 48px;
+      background: rgba(15, 17, 29, 0.65);
+      backdrop-filter: blur(3px);
+      border: 1px solid rgba(255, 106, 75, 0.25);
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5);
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #FFB347, #FF6A4B);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.5rem;
+    }
+    .hero h1 i {
+      background: none;
+      -webkit-background-clip: unset;
+      color: #ff8c5a;
+      font-size: 2.6rem;
+      margin-right: 10px;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      color: #cdd9ff;
+      max-width: 650px;
+      margin: 1rem auto 0;
+      font-weight: 400;
+    }
+    .badge {
+      display: inline-block;
+      background: #ff6a4b20;
+      border: 1px solid #ff6a4b60;
+      border-radius: 60px;
+      padding: 0.4rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-top: 1rem;
+      backdrop-filter: blur(4px);
+    }
+
+    .category-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      background: rgba(30, 33, 58, 0.8);
+      border: none;
+      padding: 0.8rem 2.2rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      border-radius: 60px;
+      color: #eaeefc;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .tab-btn i {
+      font-size: 1.2rem;
+    }
+    .tab-btn.active {
+      background: #ff6a4b;
+      color: white;
+      box-shadow: 0 10px 20px -6px #ff6a4b70;
+      border-color: #ffaa88;
+    }
+    .tab-btn:hover:not(.active) {
+      background: #2a2e4a;
+      border-color: #ff6a4b70;
+      transform: translateY(-2px);
+    }
+
+    .talent-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    .talent-card {
+      background: rgba(20, 22, 36, 0.85);
+      backdrop-filter: blur(8px);
+      border-radius: 2rem;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.3s;
+      border: 1px solid rgba(255, 140, 90, 0.3);
+      box-shadow: 0 25px 35px -12px rgba(0, 0, 0, 0.4);
+    }
+    .talent-card:hover {
+      transform: translateY(-8px);
+      border-color: #ff8c5a;
+      box-shadow: 0 30px 40px -12px #ff6a4b30;
+    }
+
+    /* IMAGE CONTAINER - OWNER CLICK TO UPLOAD */
+    .img-upload-area {
+      width: 100%;
+      height: 280px;
+      background: #0b0d18;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 2px dashed #ff6a4b70;
+      transition: all 0.2s;
+      cursor: pointer;
+      overflow: hidden;
+      background-image: radial-gradient(circle at 25% 40%, rgba(255,106,75,0.08) 2%, transparent 2.5%);
+      background-size: 28px 28px;
+    }
+    .img-upload-area:hover {
+      background: #12142a;
+      border-bottom-color: #ffaa77;
+    }
+    .img-placeholder-icon {
+      text-align: center;
+      color: #8f96c2;
+      transition: 0.2s;
+      pointer-events: none;
+    }
+    .img-placeholder-icon i {
+      font-size: 3.8rem;
+      margin-bottom: 0.5rem;
+      opacity: 0.7;
+    }
+    .img-placeholder-icon p {
+      font-size: 0.8rem;
+      font-weight: 500;
+      background: #00000099;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      backdrop-filter: blur(4px);
+    }
+    .uploaded-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .owner-hint {
+      position: absolute;
+      bottom: 8px;
+      right: 10px;
+      background: #000000aa;
+      font-size: 0.65rem;
+      padding: 4px 8px;
+      border-radius: 20px;
+      backdrop-filter: blur(4px);
+      color: #ffbc7a;
+      font-weight: 500;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .card-info {
+      padding: 1.5rem 1.2rem 1.5rem;
+    }
+    .talent-name {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      margin-bottom: 0.4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+    }
+    .talent-name span {
+      background: #ff6a4b20;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.7rem;
+      border-radius: 30px;
+      color: #ffb48a;
+    }
+    .short-bio {
+      font-size: 0.85rem;
+      color: #b9c3f0;
+      margin: 0.5rem 0 1rem;
+      line-height: 1.4;
+    }
+    .price-tag {
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: #ffbc7a;
+      margin: 0.8rem 0 0.6rem;
+    }
+    .price-tag small {
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: #a0a8da;
+    }
+    .rent-btn {
+      width: 100%;
+      background: linear-gradient(95deg, #ff6a4b, #ff8c5a);
+      border: none;
+      padding: 0.8rem 0;
+      font-weight: 700;
+      font-size: 1rem;
+      border-radius: 2rem;
+      color: white;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 0.7rem;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+    }
+    .rent-btn:hover {
+      background: linear-gradient(95deg, #ff552f, #ff764a);
+      transform: scale(0.98);
+      box-shadow: 0 2px 6px black;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.2s ease;
+    }
+    .modal-overlay.active {
+      visibility: visible;
+      opacity: 1;
+    }
+    .modal-card {
+      background: #151a2b;
+      max-width: 380px;
+      width: 85%;
+      border-radius: 2rem;
+      padding: 1.8rem;
+      text-align: center;
+      border: 1px solid #ffa074;
+      box-shadow: 0 40px 60px black;
+    }
+    .modal-card h3 {
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+    .modal-card p {
+      margin: 1rem 0;
+      color: #cfd9ff;
+    }
+    .modal-card button {
+      background: #ff6a4b;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 40px;
+      font-weight: bold;
+      margin: 0.5rem;
+      cursor: pointer;
+      color: white;
+    }
+    .close-modal {
+      background: transparent;
+      border: 1px solid #aaa;
+    }
+
+    footer {
+      margin-top: 4rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #7b86b3;
+      border-top: 1px solid #2e3150;
+      padding-top: 2rem;
+    }
+
+    @media (max-width: 620px) {
+      .container {
+        padding: 1.2rem;
+      }
+      .hero h1 {
+        font-size: 2.1rem;
+      }
+      .talent-name {
+        font-size: 1.3rem;
+      }
+    }
+    .owner-note {
+      background: #ff6a4b20;
+      display: inline-block;
+      padding: 0.3rem 1rem;
+      border-radius: 60px;
+      font-size: 0.75rem;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="hero">
+    <h1><i class="fas fa-moon"></i> NightShift Elite</h1>
+    <p>Rent top-tier professionals for overnight shifts • Focus, reliability & premium assistance.<br>Choose your talent — ready for night duties.</p>
+    <div class="badge"><i class="fas fa-user-clock"></i> 24/7 support • Night owl certified</div>
+    <div class="owner-note"><i class="fas fa-camera"></i> OWNER FEATURE: Click any photo box → Upload picture instantly</div>
+  </div>
+
+  <div class="category-tabs">
+    <button class="tab-btn active" data-cat="female"><i class="fas fa-venus"></i> Female Talent</button>
+    <button class="tab-btn" data-cat="male"><i class="fas fa-mars"></i> Male Talent</button>
+  </div>
+
+  <div id="talentContainer" class="talent-grid"></div>
+  <footer>
+    <i class="fas fa-shield-alt"></i> Professional night shift service • Click on any image box to add/change photo (Owner only)<br>
+    Rent per night • instant confirmation • secure
+  </footer>
+</div>
+
+<div id="rentModal" class="modal-overlay">
+  <div class="modal-card">
+    <i class="fas fa-crescent-moon" style="font-size: 2rem; color: #ffa56e;"></i>
+    <h3 id="modalName">Talent Name</h3>
+    <p><i class="fas fa-clock"></i> Night shift booked! <br>Our team will reach out within 15min.</p>
+    <p style="font-size: 0.8rem;">✨ Rental confirmation for <span id="modalShiftType">night work</span></p>
+    <button id="confirmRentBtn"><i class="fas fa-check-circle"></i> Got it, close</button>
+    <button class="close-modal" id="closeModalBtn">Cancel</button>
+  </div>
+</div>
+
+<script>
+  // ============================================================
+  // TALENT DATA - EXACT NAMES AS REQUESTED
+  // ============================================================
+  const femaleNames = [
+    "Mia Khalifa",
+    "Comatoze",
+    "Esra Bilgic",
+    "Elizabeth Olsen",
+    "Scarlet Johansson"
+  ];
+  
+  const maleNames = [
+    "Rafay Khan",
+    "Hunain Khan Afridi",
+    "Aryan Khan",
+    "Aleem",
+    "Moiz Abdul Khakwani"
+  ];
+  
+  const femaleBio = [
+    "⭐ Night shift expert • high energy",
+    "🌙 Task specialist • 4.9 rating",
+    "💼 Overnight workflow coordinator",
+    "⚡ Fast & reliable night assistant",
+    "🎯 Focused shift leader • premium"
+  ];
+  
+  const maleBio = [
+    "💪 Night logistics • problem solver",
+    "🔧 Tech & operations night pro",
+    "📊 Shift efficiency expert",
+    "🚀 Overnight support specialist",
+    "🛡️ Security & tasks • 24/7 ready"
+  ];
+  
+  function getRandomNightPrice(index, gender) {
+    const base = (gender === 'female' ? 320 : 280) + ((index * 13) % 150);
+    const final = Math.floor(base + 40);
+    return final > 580 ? 490 : final;
+  }
+  
+  const femaleTalents = femaleNames.map((name, idx) => ({
+    id: `f-${idx}`,
+    name: name,
+    gender: 'female',
+    bio: femaleBio[idx % femaleBio.length],
+    price: getRandomNightPrice(idx, 'female'),
+    shiftTag: "🌙 night owl"
+  }));
+  
+  const maleTalents = maleNames.map((name, idx) => ({
+    id: `m-${idx}`,
+    name: name,
+    gender: 'male',
+    bio: maleBio[idx % maleBio.length],
+    price: getRandomNightPrice(idx, 'male'),
+    shiftTag: "🌠 midnight pro"
+  }));
+  
+  let currentCategory = "female";
+  
+  // Helper: create image upload area with owner click-to-pick feature
+  function createImageUploadArea(talentId, talentName) {
+    // container div that will hold either placeholder or uploaded image
+    const container = document.createElement('div');
+    container.className = 'img-upload-area';
+    container.setAttribute('data-talent-id', talentId);
+    container.setAttribute('data-talent-name', talentName);
+    
+    // check localStorage for existing image for this talent
+    const storageKey = `talent_img_${talentId}`;
+    const savedImageData = localStorage.getItem(storageKey);
+    
+    if (savedImageData) {
+      // image already uploaded by owner
+      const img = document.createElement('img');
+      img.src = savedImageData;
+      img.className = 'uploaded-photo';
+      img.alt = talentName;
+      container.appendChild(img);
+      // add small hint overlay
+      const hintSpan = document.createElement('div');
+      hintSpan.className = 'owner-hint';
+      hintSpan.innerHTML = '<i class="fas fa-pen"></i> click to change';
+      container.appendChild(hintSpan);
+    } else {
+      // placeholder icon
+      const placeholderDiv = document.createElement('div');
+      placeholderDiv.className = 'img-placeholder-icon';
+      placeholderDiv.innerHTML = `
+        <i class="fas fa-user-circle"></i>
+        <i class="fas fa-camera" style="font-size:1.2rem; display:block; margin-top:5px;"></i>
+        <p>📸 CLICK TO ADD PHOTO</p>
+        <small style="font-size:9px; background:#00000077; display:inline-block; padding:2px 8px; border-radius:20px; margin-top:6px;">Owner upload</small>
+      `;
+      container.appendChild(placeholderDiv);
+      const hintSpan = document.createElement('div');
+      hintSpan.className = 'owner-hint';
+      hintSpan.innerHTML = '<i class="fas fa-plus-circle"></i> add picture';
+      container.appendChild(hintSpan);
+    }
+    
+    // CLICK EVENT FOR OWNER TO UPLOAD PICTURE
+    container.addEventListener('click', (e) => {
+      e.stopPropagation();
+      // create file input dynamically
+      const fileInput = document.createElement('input');
+      fileInput.type = 'file';
+      fileInput.accept = 'image/jpeg, image/png, image/jpg, image/webp';
+      fileInput.style.display = 'none';
+      document.body.appendChild(fileInput);
+      
+      fileInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file && (file.type.startsWith('image/'))) {
+          const reader = new FileReader();
+          reader.onload = function(loadEvent) {
+            const imageDataUrl = loadEvent.target.result;
+            // save to localStorage
+            localStorage.setItem(`talent_img_${talentId}`, imageDataUrl);
+            // refresh the specific talent card image area without full re-render
+            updateImageInCard(talentId, imageDataUrl, talentName);
+          };
+          reader.readAsDataURL(file);
+        } else {
+          alert("Please select a valid image file (JPEG, PNG, etc.)");
+        }
+        document.body.removeChild(fileInput);
+      });
+      
+      fileInput.click();
+    });
+    
+    return container;
+  }
+  
+  // function to update image inside existing card without re-rendering whole grid
+  function updateImageInCard(talentId, imageDataUrl, talentName) {
+    const cards = document.querySelectorAll('.talent-card');
+    for (let card of cards) {
+      const imgArea = card.querySelector('.img-upload-area');
+      if (imgArea && imgArea.getAttribute('data-talent-id') === talentId) {
+        // clear current content
+        imgArea.innerHTML = '';
+        const img = document.createElement('img');
+        img.src = imageDataUrl;
+        img.className = 'uploaded-photo';
+        img.alt = talentName;
+        imgArea.appendChild(img);
+        const hintSpan = document.createElement('div');
+        hintSpan.className = 'owner-hint';
+        hintSpan.innerHTML = '<i class="fas fa-pen"></i> click to change';
+        imgArea.appendChild(hintSpan);
+        break;
+      }
+    }
+  }
+  
+  // Render talents based on category (preserves uploaded images via localStorage)
+  function renderTalents() {
+    const container = document.getElementById('talentContainer');
+    if (!container) return;
+    const talentsList = currentCategory === "female" ? femaleTalents : maleTalents;
+    
+    container.innerHTML = '';
+    
+    talentsList.forEach(talent => {
+      const card = document.createElement('div');
+      card.className = 'talent-card';
+      card.setAttribute('data-id', talent.id);
+      
+      // --- CREATE IMAGE UPLOAD AREA (owner click to add picture) ---
+      const imageArea = createImageUploadArea(talent.id, talent.name);
+      
+      // --- INFO SECTION ---
+      const infoDiv = document.createElement('div');
+      infoDiv.className = 'card-info';
+      
+      const nameDiv = document.createElement('div');
+      nameDiv.className = 'talent-name';
+      nameDiv.innerHTML = `${talent.name} <span>${talent.shiftTag}</span>`;
+      
+      const bioDiv = document.createElement('div');
+      bioDiv.className = 'short-bio';
+      bioDiv.innerHTML = `<i class="fas fa-star-of-life" style="font-size: 0.7rem;"></i> ${talent.bio}`;
+      
+      const priceDiv = document.createElement('div');
+      priceDiv.className = 'price-tag';
+      priceDiv.innerHTML = `$${talent.price} <small>/ per night shift</small>`;
+      
+      const rentButton = document.createElement('button');
+      rentButton.className = 'rent-btn';
+      rentButton.innerHTML = '<i class="fas fa-hand-holding-heart"></i> Rent for night';
+      rentButton.setAttribute('data-rentname', talent.name);
+      rentButton.setAttribute('data-rentprice', talent.price);
+      
+      rentButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openRentModal(talent.name, talent.price);
+      });
+      
+      infoDiv.appendChild(nameDiv);
+      infoDiv.appendChild(bioDiv);
+      infoDiv.appendChild(priceDiv);
+      infoDiv.appendChild(rentButton);
+      
+      card.appendChild(imageArea);
+      card.appendChild(infoDiv);
+      container.appendChild(card);
+    });
+  }
+  
+  // Modal logic
+  const modal = document.getElementById('rentModal');
+  const modalNameSpan = document.getElementById('modalName');
+  const modalShiftSpan = document.getElementById('modalShiftType');
+  const confirmBtn = document.getElementById('confirmRentBtn');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  
+  function openRentModal(name, price) {
+    if (!modal) return;
+    modalNameSpan.innerText = name;
+    if(modalShiftSpan) modalShiftSpan.innerText = `🌙 night work • $${price} / night`;
+    modal.classList.add('active');
+  }
+  
+  function closeModal() {
+    modal.classList.remove('active');
+  }
+  
+  if(confirmBtn) confirmBtn.addEventListener('click', closeModal);
+  if(closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+  modal?.addEventListener('click', (e) => {
+    if(e.target === modal) closeModal();
+  });
+  
+  // Tab switching
+  const femaleTab = document.querySelector('.tab-btn[data-cat="female"]');
+  const maleTab = document.querySelector('.tab-btn[data-cat="male"]');
+  
+  function setActiveTab(cat) {
+    currentCategory = cat;
+    if (femaleTab && maleTab) {
+      if (cat === 'female') {
+        femaleTab.classList.add('active');
+        maleTab.classList.remove('active');
+      } else {
+        maleTab.classList.add('active');
+        femaleTab.classList.remove('active');
+      }
+    }
+    renderTalents();
+  }
+  
+  femaleTab?.addEventListener('click', () => setActiveTab('female'));
+  maleTab?.addEventListener('click', () => setActiveTab('male'));
+  
+  // initial render
+  renderTalents();
+  
+  // ============================================================
+  // INSTRUCTIONS FOR OWNER: WHERE TO ADD PICTURES
+  // ============================================================
+  // TO ADD PICTURE FOR ANY TALENT (e.g., RAFAY KHAN):
+  // 1. Open the website in any browser.
+  // 2. Navigate to "Male Talent" tab.
+  // 3. Find the card "Rafay Khan".
+  // 4. CLICK on the gray image box (says "CLICK TO ADD PHOTO").
+  // 5. Select an image from your computer (JPG/PNG).
+  // 6. The photo will appear instantly AND will be saved automatically.
+  // 7. Even if you refresh the page, the photo stays (saved in browser).
+  // 
+  // FOR ALL PROFILES (both male & female), same method applies.
+  // You can also change any photo by clicking again on the image area.
+  // 
+  // IMPORTANT: No code changes needed — everything works via click.
+  // ============================================================
+</script>
+
+<!-- 
+  ============================================================
+  📸 OWNER PHOTO UPLOAD GUIDE - WHERE TO ADD PICTURES
+  ============================================================
+  
+  TO ADD PHOTO FOR RAFAY KHAN (or any talent):
+  
+  1. Open this HTML file in any modern browser (Chrome, Edge, Firefox).
+  
+  2. Make sure you are on the "Male Talent" tab.
+  
+  3. Look for the card titled "Rafay Khan".
+  
+  4. CLICK directly on the gray image box (the area with camera icon 
+     and text "CLICK TO ADD PHOTO").
+  
+  5. A file picker will open. Select any image from your computer 
+     (JPEG, PNG, etc.).
+  
+  6. The photo will appear immediately on Rafay Khan's card.
+  
+  7. The photo is saved automatically in your browser. Even if you 
+     refresh the page or close and reopen, the picture will still be there.
+  
+  8. To change the photo, simply click on the image box again and 
+     select a new picture.
+  
+  ✅ SAME PROCESS FOR ALL PROFILES:
+     - Female: Mia Khalifa, Comatoze, Esra Bilgic, Elizabeth Olsen, Scarlet Johansson
+     - Male: Rafay Khan, Hunain Khan Afridi, Aryan Khan, Aleem, Moiz Abdul Khakwani
+  
+  ✅ No coding needed. No need to edit files. Just click and upload.
+  
+  ✅ If you want to reset all photos, clear your browser's local storage 
+     or use "Developer Tools > Application > Local Storage".
+  
+  ============================================================
+-->
+</body>
+</html>
